@@ -38,37 +38,37 @@ public class SubHandlerCustom {
     private SubHandlerCustom() { }
 
     public Map<String, Handler> getSubHandler(BinaryMessenger messenger, android.app.Activity activity) {
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(GEOFENCE_BROADCAST_ACTION);
+//        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+//        filter.addAction(GEOFENCE_BROADCAST_ACTION);
+//
+//        final BroadcastReceiver receiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                if (GEOFENCE_BROADCAST_ACTION.equals(intent.getAction())) {
+//                    Bundle bundle = intent.getExtras();
+//                    Log.d(GEOFENCE_BROADCAST_ACTION, "收到围栏消息: " + bundle);    //获取Bundle
+//                    //获取围栏行为：
+//                    int status = bundle.getInt(GeoFence.BUNDLE_KEY_FENCESTATUS);
+//                    //获取自定义的围栏标识：
+//                    String customId = bundle.getString(GeoFence.BUNDLE_KEY_CUSTOMID);
+//                    //获取围栏ID:
+//                    String fenceId = bundle.getString(GeoFence.BUNDLE_KEY_FENCEID);
+//                    //获取当前有触发的围栏对象：
+//                    GeoFence fence = bundle.getParcelable(GeoFence.BUNDLE_KEY_FENCE);
+//
+//                    Map<String, Object> arguments = new HashMap<>();
+//                    arguments.put("status", status);
+//                    arguments.put("customId", customId);
+//                    arguments.put("fenceId", fenceId);
+//                    arguments.put("fence", fence);
+//
+//                    new MethodChannel(messenger, "com.amap.api.fence.GeoFenceClient::addGeoFenceX::Callback", new StandardMethodCodec(new FluttifyMessageCodec()))
+//                            .invokeMethod("Callback::com.amap.api.fence.GeoFenceClient::addGeoFenceX", arguments);
+//                }
+//            }
+//        };
 
-        final BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (GEOFENCE_BROADCAST_ACTION.equals(intent.getAction())) {
-                    Bundle bundle = intent.getExtras();
-                    Log.d(GEOFENCE_BROADCAST_ACTION, "收到围栏消息: " + bundle);    //获取Bundle
-                    //获取围栏行为：
-                    int status = bundle.getInt(GeoFence.BUNDLE_KEY_FENCESTATUS);
-                    //获取自定义的围栏标识：
-                    String customId = bundle.getString(GeoFence.BUNDLE_KEY_CUSTOMID);
-                    //获取围栏ID:
-                    String fenceId = bundle.getString(GeoFence.BUNDLE_KEY_FENCEID);
-                    //获取当前有触发的围栏对象：
-                    GeoFence fence = bundle.getParcelable(GeoFence.BUNDLE_KEY_FENCE);
-
-                    Map<String, Object> arguments = new HashMap<>();
-                    arguments.put("status", status);
-                    arguments.put("customId", customId);
-                    arguments.put("fenceId", fenceId);
-                    arguments.put("fence", fence);
-
-                    new MethodChannel(messenger, "com.amap.api.fence.GeoFenceClient::addGeoFenceX::Callback", new StandardMethodCodec(new FluttifyMessageCodec()))
-                            .invokeMethod("Callback::com.amap.api.fence.GeoFenceClient::addGeoFenceX", arguments);
-                }
-            }
-        };
-
-        activity.registerReceiver(receiver, filter);
+//        activity.registerReceiver(receiver, filter);
 
         return new HashMap<String, Handler>() {{
             put("com.amap.api.fence.GeoFenceClient::addCircleGeoFenceX", (rawArgs, methodResult) -> {
@@ -177,16 +177,16 @@ public class SubHandlerCustom {
 
                 methodResult.success("success");
             });
-            put("com.amap.api.fence.GeoFenceClient::unregisterBroadcastReceiver", (rawArgs, methodResult) -> {
-                try {
-                    activity.unregisterReceiver(receiver);
-                    if (getEnableLog()) Log.d("GeoFenceClient", "取消注册围栏广播");
-                    methodResult.success("success");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    methodResult.error(e.getMessage(), e.getMessage(), e.getMessage());
-                }
-            });
+//            put("com.amap.api.fence.GeoFenceClient::unregisterBroadcastReceiver", (rawArgs, methodResult) -> {
+//                try {
+//                    activity.unregisterReceiver(receiver);
+//                    if (getEnableLog()) Log.d("GeoFenceClient", "取消注册围栏广播");
+//                    methodResult.success("success");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    methodResult.error(e.getMessage(), e.getMessage(), e.getMessage());
+//                }
+//            });
         }};
     }
 }
